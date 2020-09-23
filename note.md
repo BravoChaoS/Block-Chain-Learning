@@ -164,5 +164,63 @@
 
 #### Logs
 
+- account address and event data
+- stored in bloom filter
+
+
+
+#### Transaction receipt
+
+- Logs stored in the header come from the log information contained in the transaction receipt.
+
+- include:
+  - the block number
+  - block hash 
+  - transaction hash 
+  - gas used by the current transaction
+  - ...
+
+#### Block difficulty
+
+- increase the difficulty when a block validated quickly than the previous block.
+
+- difficulty affect by **nonce**
+
+- relationship between difficulty and nonce
+  $$
+  n \leq \frac{2^{256}}{H_d}
+  $$
+  where the H~d~  is the difficulty.
+
+- adjust the time of validate a block by adjust the block difficulty
+
+
+
+## Transaction Execution
+
+#### Basic requirement of a transaction
+
+- properly formatted **RLP**(Recursive Length Prefix)
+
+- valid transaction signature
+
+- valid transaction nonce (equal to sender's nonce)
+
+- gas limit not less than the **intrinsic gas**:
+
+  - a predefined cost (21,000 gas for executing the transaction)
+
+    > why not in wei?
+
+  - a gas fee for data sent(4 gas/byte for zero bytes, 68 gas/byte for non-zero bytes)
+
+  - contract creation (32,000 gas)
+
+    ![image-20200923161236959](C:\Users\89137\AppData\Roaming\Typora\typora-user-images\image-20200923161236959.png)
+
+- **Upfront cost**
+
+  ![image-20200923161223435](C:\Users\89137\AppData\Roaming\Typora\typora-user-images\image-20200923161223435.png)
+
 
 

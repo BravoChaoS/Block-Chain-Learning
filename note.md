@@ -261,7 +261,81 @@
 
   - setting the **codeHash** as the hash of a empty string
 
-- 
+- Use init code send with transaction (account created)
+
+- activate code will use gas
+
+  - when gas is not enough, the out-of-gas (OOG) exception
+
+- pay the contract-creation cost
+
+- if all above done without exception, the state is allowed to persist.
+
+#### Message calls
+
+- similar to contract creation, it doesn't contain code but it can contain input data.
+
+- there are no way to stop or revert the execution before, but
+
+  > **But the Byzantium update includes a new “revert” code that allows a contract to stop execution and revert state changes, without consuming the remaining gas, and with the ability to return a reason for the failed transaction.** 
+
+
+
+## Execution model
+
+#### EVM
+
+> skipped
+
+
+
+#### Finalize a block
+
+1. validate ommers: each ommer is valid and in 6^th^ generations
+2. validate transactions: check the gas used
+3. apply rewards (only mining): award miner
+4. verify state and nonce: check the state trie
+
+
+
+## Mining proof of work
+
+#### Ethash
+
+- algorithm
+  $$
+  (m, n) = PoW(H_{n'}, H_n, d)
+  $$
+
+  - m: mixHash
+  - n: nonce
+  - H~n'~ : new block's header (excluding the nonce and mixHash components)
+  - H~n~ : nonce of the block header
+  - d: DAG, a large data set
+
+
+
+#### Mining as a security mechanism
+
+> This is exactly what the PoW algorithm does: it ensures that a particular blockchain will remain canonical into the future, making it incredibly difficult for an attacker to create new blocks that overwrite a certain part of history (e.g. by erasing transactions or creating fake transactions) or maintain a fork.
+
+- ensure there are only one truth that everyone believe in.
+- keeping away from 51% attack by increase the difficulty.
+
+
+
+#### Mining as a wealth distribution mechanism
+
+> In order to ensure that the use of the PoW consensus mechanism for security and wealth distribution is sustainable in the long run, Ethereum strives to instill these two properties: 
+>
+> - Make it accessible to as many people as possible. In other words, **people shouldn’t need specialized or uncommon hardware to run the algorithm.** The purpose of this is to make the wealth distribution model as open as possible so that anyone can provide any amount of compute power in return for Ether. 
+> - **Reduce the possibility for any single node (or small set) to make a disproportionate amount of profit**. Any node that can make a disproportionate amount of profit means that the node has a large influence on determining the canonical blockchain. This is troublesome because it reduces network security
+
+- from PoW to PoS (Prove of Stake)
+
+
+
+
 
 
 

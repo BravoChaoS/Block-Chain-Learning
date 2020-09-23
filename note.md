@@ -218,17 +218,17 @@
 
   - contract creation (32,000 gas)
 
-    ![image-20200923161236959](C:\Users\89137\AppData\Roaming\Typora\typora-user-images\image-20200923161236959.png)
+    ![image-20200923161236959](note.assets/image-20200923161236959.png)
 
 - **Upfront cost**
 
-  ![image-20200923161223435](C:\Users\89137\AppData\Roaming\Typora\typora-user-images\image-20200923161223435.png)
+  ![image-20200923161223435](note.assets/image-20200923161223435.png)
 
 #### Main process
 
 1. calculate the remaining gas = gas limit - intrinsic gas
 
-   ![image-20200923163101557](C:\Users\89137\AppData\Roaming\Typora\typora-user-images\image-20200923163101557.png)
+   ![image-20200923163101557](note.assets/image-20200923163101557.png)
 
 2. transaction starts executing
 

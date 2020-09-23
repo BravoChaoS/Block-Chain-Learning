@@ -1,51 +1,168 @@
-### Account
+## Account
 
-- Externally owned account
-  - controlled by private keys
-  - no code
-- Contract account (auto)
-  - controlled by code
-  - can't initiate new transactions on their own
-    - can fire transaction in response to other transaction they received
-- message from EA or CA to CA will activate the code of CA.
-- consist of:
-  - nonce: number of transactions send by account
-  - balance: number of wei
-  - storageRoot: root node of Merkle tree
-  - codeHash
-    - empty for EA
-    - hash of the code for CA
+#### Externally owned account
+
+- controlled by private keys
+- no code
+
+#### Contract account (auto)
+
+- controlled by code
+- can't initiate new transactions on their own
+  - can fire transaction in response to other transaction they received
+
+#### message from EA or CA to CA will activate the code of CA.
+
+#### consist of:
+
+- nonce: number of transactions send by account
+- balance: number of wei
+- storageRoot: root node of Merkle tree
+- codeHash
+  - empty for EA
+  - hash of the code for CA
 
 
 
-### Merkel Tree
+## Merkle Tree
 
 - Binary tree, father is the Hash of two sons
 - Large amount of leaves
 - has a key shows the path to value
 - full nodes and light nodes
-- Merkel proof
+- Merkle proof
 
-### Gas and Payment
 
-- Gas
-  - Transaction cause by computation need fee
-  - the fee called gas
-  - measured in gwei
-    - 1 Ether = 1e18 wei
-    - 1 gwei = 1e9 wei
-- Gas in transaction
-  - sender set the gas limit and gas price
-    - so the $max~transaction~fee = gas~limit * gas~price$
-  - A transaction will use the gas according to the process
-  - if the used gas small than max transaction fee, then return the remaining gas to sender
-  - else, the transaction failed, state revert and the gas won't return.
-  - all the gas will award to "beneficiary" address (typically the miner's address)
-- Fees for storage
-- Purpose of fees
-  - complex uses of smart contracts will put a strain on the network
-  - prevent users from overtaxing the network
-  - protect the network from deliberate attack such as a loop.
-  - encourage the calculate and storage in network
 
-### Transaction and messages
+## Gas and Payment
+
+#### Gas
+
+- Transaction cause by computation need fee
+- the fee called gas
+- measured in gwei
+  - 1 Ether = 1^18^ wei
+  - 1 gwei = 1^9^ wei
+
+#### Gas in transaction
+
+- sender set the gas limit and gas price
+  - so the $max~transaction~fee = gas~limit * gas~price$
+- A transaction will use the gas according to the process
+- if the used gas small than max transaction fee, then return the remaining gas to sender
+- else, the transaction failed, state revert and the gas won't return.
+- all the gas will award to "beneficiary" address (typically the miner's address)
+
+#### Fees for storage
+
+- storage cost resource in Ethereum
+
+#### Purpose of fees
+
+- complex uses of smart contracts will put a strain on the network
+- prevent users from overtaxing the network
+- protect the network from deliberate attack such as a loop.
+- encourage the calculate and storage in network
+
+
+
+## Transaction and messages
+
+#### Transaction
+
+- is a cryptographically signed piece of **instruction**
+
+- two types: message calls and contract creations
+
+- consist:
+
+  - nonce: number of transaction sent by the sender
+
+  - gasPrice: price of unit gas
+
+  - gasLimit: limit of gas
+
+    > Why the fees be split into gasPrice and gasLimit?
+
+  - to: address of the recipient
+
+    > the contract account address does not yet exist, and so an empty value is used.
+
+  - value: amount of wei to be transferred
+
+  - v, r, s: variables to generate the signature
+
+  - init(only exists for contract-creating transactions): Initialize the new contract account
+
+  - data(optional and only exists for message calls): store data
+
+#### Message and internal transactions:
+
+- internal transactions will activate the code in CA
+- from CA to CA
+
+#### process:
+
+![image-20200923111243358](note.assets/image-20200923111243358.png)
+- internal transactions or messages don't contain a **gasLimit**.
+
+  >  If, in the chain of transactions and messages, a particular message execution runs out of gas, then that **message’s execution will revert**, along with any subsequent messages triggered by the execution. However, the parent execution **does not** need to revert.
+
+  
+
+## Blocks
+
+#### consist of: 
+
+- the **block header**
+- a **set of transactions**
+- a **set of other block headers for the current block’s ommers.**
+
+#### Ommers:
+
+- Orphaned Blocks: The competing blocks do not make it into the main chain
+
+- Ommer Blocks: within the sixth generation or smaller of the present block.
+
+- Ommers is for award the miners who mined the orphaned blocks
+
+  > Because of the way Ethereum is built, **block times are much lower (~15 seconds) than those of other blockchains**, like Bitcoin (~10 minutes). This enables faster transaction processing. However, one of the downsides of shorter block times is that **more competing block solutions are found by miners.**
+
+#### Block header:
+
+- parentHash: a hash of the parent header
+
+- ommersHash: hash of list of ommers
+
+- beneficiary: the account will receives the award
+
+- stateRoot: root of the trie of the state
+
+- transactionsRoot: root of the trie of the transactions
+
+- receiptsRoot: root of the trie of the receipts of the transactions
+
+  > these three root are the root of Merkle tree
+
+- logsBloom: a **Bloom filter**(data structure) consists of log information
+
+- difficulty: difficulty level
+
+- number: length to the genesis (depth)
+
+- gasLimit: current gas limit
+
+- gasUsed: total used gas in the block
+
+- timestamp: time stamp of the block's inception (be created)
+
+- extraData: data about the block
+
+- mixHash and nonce: to proves the enough computation (prove of work)
+
+![image-20200923121529942](note.assets/image-20200923121529942.png)
+
+#### Logs
+
+
+
